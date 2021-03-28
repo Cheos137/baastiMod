@@ -27,7 +27,7 @@ public class EventListener {
 				entity.removeAllEffects();
 				entity.addEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
 				entity.addEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
-//				entity.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 800, 0));
+				entity.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 800, 0));
 				entity.level.broadcastEntityEvent(entity, (byte)35);
 				stack.setDamageValue(Math.min(stack.getDamageValue() + 200, stack.getMaxDamage()));
 				event.setCanceled(true);
