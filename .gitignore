@@ -43,3 +43,8 @@ gradle-app.setting
 .classpath
 .project
 .settings/
+*.launch
+
+
+# FORGE
+/run/
