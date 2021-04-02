@@ -1,7 +1,5 @@
 package dev.cheos.baastimod;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -29,21 +27,18 @@ public class EventListener {
 		
 		/// UNDYING enchantment / effect impl
 		undying: {
+			Random random = entity.getRandom();
+			
 			if (entity.hasEffect(CustomEffects.UNDYING)) {
-				
 				EffectInstance effect = entity.getEffect(CustomEffects.UNDYING);
-				try {
-					Method tickDownDuration = EffectInstance.class.getDeclaredMethod("tickDownDuration", new Class[] { });
-					for (int i = 0; i < 40; i++) {
-						tickDownDuration.invoke(effect);
-						if (effect.getDuration() <= 0)
-							break;
-					}
-				} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-				}
+				int duration  = effect.getDuration(); // TICKS
+				int amplifier = effect.getAmplifier();
+				
+				duration = Math.max(0, duration - 20 * (50 + random.nextInt(31)));
 				
 				MiscImpl.doUndyingFor(entity, null);
+				if (duration > 0)
+					entity.addEffect(new EffectInstance(CustomEffects.UNDYING, duration, amplifier));
 				event.setCanceled(true);
 				break undying;
 			}
@@ -54,10 +49,11 @@ public class EventListener {
 					stack -> stack.getItem() instanceof ArmorItem);
 			
 			if (armorItem != null) {
-				Random random = entity.getRandom();
+				ItemStack copy = armorItem.getValue().copy();
+				
 				armorItem.getValue().hurtAndBreak(50 + random.nextInt(31), entity, le ->
 					le.broadcastBreakEvent(armorItem.getKey()));
-				MiscImpl.doUndyingFor(entity, armorItem.getValue());
+				MiscImpl.doUndyingFor(entity, copy);
 				event.setCanceled(true);
 			}
 		}
