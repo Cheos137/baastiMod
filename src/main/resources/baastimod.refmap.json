@@ -1,0 +1,10 @@
+{
+    "required": true,
+    "package": "dev.cheos.baastimod.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "baastimod.refmap.json",
+    "mixins": [
+        "MixinClientPlayNetHandler"
+    ],
+    "minVersion": "0.8"
+}
