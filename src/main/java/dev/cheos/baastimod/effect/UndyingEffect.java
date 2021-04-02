@@ -14,6 +14,6 @@ public class UndyingEffect extends Effect {
 	
 	@Override
 	public boolean shouldRenderHUD(EffectInstance effect) {
-		return false;
+		return true;
 	}
 }
