@@ -26,33 +26,32 @@ public class BaastiModPacketHandler {
 			BaastiModPacketHandler::checkVersionServer);
 	private static int packetID = 0;
 	
-	@SuppressWarnings("unchecked")
 	public static void init() {
-		register((Class<? extends IPacket<INetHandler>>) SUndyingActivatedPacket.class, SUndyingActivatedPacket::new);
+		register(SUndyingActivatedPacket.class, SUndyingActivatedPacket::new);
 	}
 	
-	public static void sendToClient(IPacket<? extends INetHandler> packet, ServerPlayerEntity to) {
+	public static <T extends INetHandler> void sendToClient(IPacket<T> packet, ServerPlayerEntity to) {
 		channel.send(PacketDistributor.PLAYER.with(() -> to), packet);
 	}
 	
-	public static void sendToClient(IPacket<? extends INetHandler> packet, Entity tracking) {
+	public static <T extends INetHandler> void sendToClient(IPacket<T> packet, Entity tracking) {
 		channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> tracking), packet);
 	}
 	
-	public static void sendToServer(IPacket<? extends INetHandler> packet) {
+	public static <T extends INetHandler> void sendToServer(IPacket<T> packet) {
 		channel.sendToServer(packet);
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static <MSG extends IPacket<INetHandler>> void register(Class<MSG> clazz, Supplier<IPacket<? extends INetHandler>> provider) {
+	private static <T extends INetHandler, PACKET extends IPacket<T>> void register(Class<PACKET> clazz, Supplier<IPacket<T>> provider) {
 		channel.registerMessage(packetID++,
 				clazz,
 				BaastiModPacketHandler::encode,
-				buf -> (MSG) decode(buf, provider),
+				buf -> (PACKET) decode(buf, provider),
 				BaastiModPacketHandler::handle);
 	}
 	
-	private static void encode(IPacket<INetHandler> packet, PacketBuffer buffer) {
+	private static <T extends INetHandler> void encode(IPacket<T> packet, PacketBuffer buffer) {
 		try {
 			packet.write(buffer);
 		} catch (IOException e) {
@@ -60,10 +59,9 @@ public class BaastiModPacketHandler {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static IPacket<INetHandler> decode(PacketBuffer buffer, Supplier<IPacket<? extends INetHandler>> provider) {
+	private static <T extends INetHandler> IPacket<T> decode(PacketBuffer buffer, Supplier<IPacket<T>> provider) {
 		try {
-			IPacket<INetHandler> packet = (IPacket<INetHandler>) provider.get();
+			IPacket<T> packet = provider.get();
 			packet.read(buffer);
 			return packet;
 		} catch(IOException e) {
@@ -72,11 +70,12 @@ public class BaastiModPacketHandler {
 		}
 	}
 	
-	private static void handle(IPacket<INetHandler> packet, Supplier<NetworkEvent.Context> ctx) {
+	@SuppressWarnings("unchecked")
+	private static <T extends INetHandler> void handle(IPacket<T> packet, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			switch (ctx.get().getDirection()) {
 				case PLAY_TO_CLIENT:
-					packet.handle(ClientNetHandler.instance());
+					packet.handle((T) ClientNetHandler.instance());
 					break;
 				case PLAY_TO_SERVER:
 					break;
