@@ -3,8 +3,12 @@ package dev.cheos.baastimod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import dev.cheos.baastimod.effect.CustomEffects;
 import dev.cheos.baastimod.enchantment.CustomEnchantments;
+import dev.cheos.baastimod.net.BaastiModPacketHandler;
+import dev.cheos.baastimod.net.ClientNetHandler;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.potion.Effect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,10 +34,10 @@ public class BaastiMod {
         MinecraftForge.EVENT_BUS.register(this);
 	}
 	
-	private void common(FMLCommonSetupEvent event)   { }
-	private void client(FMLClientSetupEvent event)   { }
+	public void common(FMLCommonSetupEvent event)   { BaastiModPacketHandler.init(); }
+	public void client(FMLClientSetupEvent event)   { new ClientNetHandler(event.getMinecraftSupplier().get()); }
 	@SubscribeEvent
-	private void server(FMLServerStartedEvent event) { }
+	public void server(FMLServerStartedEvent event) { }
 	
 	@EventBusSubscriber(bus = Bus.MOD, modid = BaastiMod.MODID)
 	public static class RegistryEvents {
@@ -44,6 +48,14 @@ public class BaastiMod {
 			
 			LOGGER.debug("Registering 'undying' enchantment");
             enchRegistry.register(CustomEnchantments.UNDYING);
+		}
+		
+		@SubscribeEvent
+		public static void onEffectRegistry(RegistryEvent.Register<Effect> event) {
+			IForgeRegistry<Effect> effectRegistry = event.getRegistry();
+			
+			LOGGER.debug("Registering 'undying' effect");
+			effectRegistry.register(CustomEffects.UNDYING);
 		}
 	}
 }

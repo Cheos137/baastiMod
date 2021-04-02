@@ -6,8 +6,10 @@ import net.minecraft.potion.EffectType;
 import net.minecraft.util.ResourceLocation;
 
 public class UndyingEffect extends Effect {
-	public UndyingEffect(int color) {
-		super(EffectType.BENEFICIAL, color);
+	public UndyingEffect() {
+		super(EffectType.BENEFICIAL, 0xE8C61E);
 		setRegistryName(new ResourceLocation(BaastiMod.MODID, "undying"));
 	}
+	
+	
 }
