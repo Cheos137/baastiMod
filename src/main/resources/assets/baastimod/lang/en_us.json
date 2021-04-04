@@ -3,5 +3,6 @@
     "effect.baastimod.undying": "Undying",
     "item.minecraft.potion.effect.potion_undying": "Potion of Undying",
     "item.minecraft.splash_potion.effect.potion_undying": "Splash Potion of Undying",
-    "item.minecraft.lingering_potion.effect.potion_undying": "Lingering Potion of Undying"
+    "item.minecraft.lingering_potion.effect.potion_undying": "Lingering Potion of Undying",
+    "item.minecraft.tipped_arrow.effect.potion_undying": "Arrow of Undying"
 }
