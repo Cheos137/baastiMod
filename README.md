@@ -6,7 +6,7 @@ It is conceptualized by [baastiZockt](https://www.youtube.com/c/baastiZockt/) an
 ## Languages / Sprachen
 
 As [baastiZockt](https://www.youtube.com/c/baastiZockt/) has a community of mostly German-speaking people, there is also a German version of this file [here](README_GERMAN.md).<br>
-Da [baastiZockt](https://www.youtube.com/c/baastiZockt/) ja eine Community hat, die größtenteils aus deutssprachigen Leuten besteht, gibt es auch eine deutsche Version dieser Datei [hier](README_GERMAN.md).
+Da [baastiZockt](https://www.youtube.com/c/baastiZockt/) eine Community hat, die größtenteils aus deutssprachigen Leuten besteht, gibt es auch eine deutsche Version dieser Datei [hier](README_GERMAN.md).
 
 ## Downloads?
 
