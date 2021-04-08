@@ -10,7 +10,7 @@ Die englische Version dieser Datei findest du [hier](README.md).
 
 ## Downloads?
 
-Drüben auf [Curseforge](https://umm.ich.habe.noch.kein/curseforge/project/erstellt).
+Drüben auf [Curseforge](https://www.curseforge.com/minecraft/mc-mods/baastimod).
 
 ## Was kann diese Mod?
 
