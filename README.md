@@ -10,7 +10,7 @@ Da [baastiZockt](https://www.youtube.com/c/baastiZockt/) ja eine Community hat, 
 
 ## Downloads?
 
-Yeah. Over on [Curseforge](https://well.i.didnt.actually/create/a/curseforge-project/yet)
+Yeah. Over on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/baastimod)
 
 ## What can I do with the mod?
 
