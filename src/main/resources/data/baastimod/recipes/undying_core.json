@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " t ",
+    "tgt",
+    " t "
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "t": {
+      "item": "minecraft:totem_of_undying"
+    }
+  },
+  "result": {
+    "item": "baastimod:undying_core"
+  }
+}

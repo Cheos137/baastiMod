@@ -1,0 +1,12 @@
+{
+    "enchantment.baastimod.undying": "Unsterblichkeit",
+    "effect.baastimod.undying": "Unsterblichkeit",
+
+    "block.baastimod.ancient_fragment": "Antikes Fragment",
+    "block.baastimod.undying_core": "Unsterblichkeitskern",
+
+    "item.minecraft.potion.effect.potion_undying": "Trank der Unsterblichkeit",
+    "item.minecraft.splash_potion.effect.potion_undying": "Wurftrank der Unsterblichkeit",
+    "item.minecraft.lingering_potion.effect.potion_undying": "Verweiltrank der Unsterblichkeit",
+    "item.minecraft.tipped_arrow.effect.potion_undying": "Pfeil der Unsterblichkeit"
+}

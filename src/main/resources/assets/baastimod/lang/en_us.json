@@ -1,6 +1,10 @@
 {
     "enchantment.baastimod.undying": "Undying",
     "effect.baastimod.undying": "Undying",
+
+    "block.baastimod.ancient_fragment": "Ancient Fragment",
+    "block.baastimod.undying_core": "Undying Core",
+
     "item.minecraft.potion.effect.potion_undying": "Potion of Undying",
     "item.minecraft.splash_potion.effect.potion_undying": "Splash Potion of Undying",
     "item.minecraft.lingering_potion.effect.potion_undying": "Lingering Potion of Undying",
