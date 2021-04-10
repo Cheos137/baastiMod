@@ -22,60 +22,72 @@ import net.minecraft.util.math.vector.Vector3f;
  */
 public class UndyingCoreTileEntityRenderer extends TileEntityRenderer<UndyingCoreTileEntity> {
 	@SuppressWarnings("deprecation")
-	private final RenderMaterial mat = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(BaastiMod.MODID, "entity/undying_core"));
+	private static final RenderMaterial GLASS_MATERIAL = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(BaastiMod.MODID, "entity/undying_core_box"));
 	@SuppressWarnings("deprecation")
-	private final RenderMaterial TOTEM_MATERIAL = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation("item/totem_of_undying"));
-	private final ModelRenderer TEX_RENDER = new ModelRenderer(32, 16, 0, 0);
-	private final ModelRenderer TOTEM_MODEL = new ModelRenderer(16, 16, 0, 0);
+	private static final RenderMaterial TOTEM_MATERIAL = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(BaastiMod.MODID, "entity/undying_core_totem"));
+	private final ModelRenderer GLASS_MODEL = new ModelRenderer(64, 32, 0, 0);
+	private final ModelRenderer TOTEM_MODEL = new ModelRenderer(32, 16, 0, 0);
 	
 	public UndyingCoreTileEntityRenderer(TileEntityRendererDispatcher terd) {
 		super(terd);
-		this.TEX_RENDER.addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F);
-//		this.TOTEM_MODEL.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-		this.TOTEM_MODEL.addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F);
+		this.GLASS_MODEL    .addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F);
+		this.TOTEM_MODEL    .addBox(-4.0F, -5.0F, -0.5F,  8.0F, 11.0F,  1.0F)  // CENTER BOX
+			.texOffs( 0, 12).addBox(-3.0F,  6.0F, -0.5F,  6.0F,  1.0F,  1.0F)  // TOP BIT
+			.texOffs(18,  0).addBox(-3.0F, -7.0F, -0.5F,  6.0F,  2.0F,  1.0F)  // BOTTOM PART
+			.texOffs( 0, 14).addBox(-2.0F, -8.0F, -0.5F,  4.0F,  1.0F,  1.0F)  // BOTTOM BIT
+			.texOffs(18,  3).addBox(-6.0F, -3.0F, -0.5F,  2.0F,  3.0F,  1.0F)  // LEFT ARM
+			.texOffs(18,  7).addBox(-7.0F, -2.0F, -0.5F,  1.0F,  2.0F,  1.0F)  // LEFT ARM BIT
+			.texOffs(24,  3).addBox( 4.0F, -3.0F, -0.5F,  2.0F,  3.0F,  1.0F)  // RIGHT ARM
+			.texOffs(24,  7).addBox( 6.0F, -2.0F, -0.5F,  1.0F,  2.0F,  1.0F); // RIGHT ARM BIT
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void render(UndyingCoreTileEntity tileentity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 		if (tileentity == null) return; // glitched TE?
-		if (tileentity.hasLevel() && !tileentity.getBlockState().is(CustomBlocks.UNDYING_CORE)) return;
-		
-		int tier = tileentity.getTier();
-		
-		if (!tileentity.hasLevel() || tier < 1) { // probably item to be rendered -> no animation
-			IVertexBuilder vb = mat.buffer(buffer, RenderType::entityTranslucent);
+		if (!tileentity.hasLevel()) { // probably item to be rendered -> no animation
+			IVertexBuilder vb = TOTEM_MATERIAL.buffer(buffer, RenderType::entitySolid);
 			matrixStack.pushPose();
 			matrixStack.translate(0.5D, 0.5D, 0.5D);
-			TEX_RENDER.render(matrixStack, vb, combinedLight, combinedOverlay);
+			matrixStack.scale(0.5F, 0.5F, 0.5F);
+			TOTEM_MODEL.render(matrixStack, vb, combinedLight, combinedOverlay);
 			matrixStack.popPose();
+			renderGlassBox(matrixStack, buffer, combinedLight, combinedOverlay);
 			return;
 		}
+		if (!tileentity.getBlockState().is(CustomBlocks.UNDYING_CORE)) return;
 		
-		// what do i really need for this to work like i want it to? custom textures and magic? idk
-		
-		ModelRenderer MODEL = new ModelRenderer(16, 16, 0, 0);
-		MODEL.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-		
+		final int tier = tileentity.getTier();
 		final long ticks = tileentity.getLevel().getGameTime();
-		final float RTSF = 0.4F; // Rotation speed factor ... lower -> faster
-//		RenderSystem.pushMatrix();
-//		RenderSystem.enableAlphaTest();
-//		IVertexBuilder vb = mat.buffer(buffer, RenderType::entityTranslucent);
-		IVertexBuilder vb = TOTEM_MATERIAL.buffer(buffer, RenderType::entityTranslucent);
+		
+		IVertexBuilder vb = TOTEM_MATERIAL.buffer(buffer, RenderType::entitySolid);
 		matrixStack.pushPose();
 		matrixStack.translate(0.5D, 0.5D, 0.5D);
-		matrixStack.translate(0.15D * MathHelper.cos(ticks / 100F), 0.05D * MathHelper.sin(ticks / 25F), 0.15D * MathHelper.sin(ticks / 100F));
-		matrixStack.mulPose(Vector3f.XP.rotationDegrees((ticks % (360 * RTSF)) / RTSF));
-		matrixStack.mulPose(Vector3f.YP.rotationDegrees((ticks % (360 * RTSF)) / RTSF));
-		matrixStack.mulPose(Vector3f.ZP.rotationDegrees((ticks % (360 * RTSF)) / RTSF));
-//		TEX_RENDER.render(matrixStack, vb, combinedLight, combinedOverlay);
-//		matrixStack.scale(1F, 1F, 1F);
 		matrixStack.scale(0.5F, 0.5F, 0.5F);
-//		TOTEM_MODEL.render(matrixStack, vb, combinedLight, combinedOverlay);
-		MODEL.render(matrixStack, vb, combinedLight, combinedOverlay);
 		
+		if (tier < 1)
+			matrixStack.translate(0.0D, 0.1D * MathHelper.sin(ticks / 50F), 0.0D);
+		else {
+			matrixStack.translate(0.05D * MathHelper.cos(ticks / 100F), 0.1D * MathHelper.sin(ticks / 50F), 0.05D * MathHelper.sin(ticks / 100F));
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(ticks % 360));
+		}
+		if (tier > 1)
+			matrixStack.mulPose(Vector3f.XP.rotationDegrees(15 * MathHelper.sin((ticks / 75F) % 360)));
+		if (tier > 2)
+			matrixStack.mulPose(Vector3f.ZP.rotationDegrees(15 * MathHelper.sin((ticks / 100F) % 360)));
+		
+		TOTEM_MODEL.render(matrixStack, vb, combinedLight, combinedOverlay);
 		matrixStack.popPose();
-//		RenderSystem.popMatrix();
+		
+		renderGlassBox(matrixStack, buffer, combinedLight, combinedOverlay);
+	}
+	
+	private void renderGlassBox(MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+		IVertexBuilder vb = GLASS_MATERIAL.buffer(buffer, RenderType::entityTranslucent);
+		matrixStack.pushPose();
+		matrixStack.translate(0.5D, 0.5D, 0.5D);
+		matrixStack.scale(0.6F, 0.6F, 0.6F);
+//		matrixStack.scale(0.75F, 0.75F, 0.75F);
+		GLASS_MODEL.render(matrixStack, vb, combinedLight, combinedOverlay);
+		matrixStack.popPose();
 	}
 }

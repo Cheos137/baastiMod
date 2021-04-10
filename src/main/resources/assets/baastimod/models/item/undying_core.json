@@ -1,7 +1,7 @@
 {
     "parent": "builtin/entity",
     "textures": {
-        "particle": "baastimod:entity/undying_core"
+        "particle": "baastimod:entity/undying_core_box"
     },
     "display": {
         "gui": {

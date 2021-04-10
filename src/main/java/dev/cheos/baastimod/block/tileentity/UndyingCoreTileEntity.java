@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
  * @see {@link ConduitTileEntity}
  */
 public class UndyingCoreTileEntity extends TileEntity implements ITickableTileEntity {
-	private final List<BlockPos> surroundings = new ArrayList<>();
+	public final List<BlockPos> surroundings = new ArrayList<>();
 	private int tier;
 	
 	public UndyingCoreTileEntity() {
@@ -28,11 +28,10 @@ public class UndyingCoreTileEntity extends TileEntity implements ITickableTileEn
 
 	@Override
 	public void tick() {
-		if (this.level.getGameTime() % 100L == 0L) {
-			tier = checkTier(this.worldPosition);
+		tier = checkTier(this.worldPosition);
+		if (this.level.getGameTime() % 100L == 0L)
 			if (!this.level.isClientSide)
 				applyEffects();
-		}
 	}
 	
 	public int getTier() {
@@ -48,12 +47,12 @@ public class UndyingCoreTileEntity extends TileEntity implements ITickableTileEn
 				for (int z = -2; z <= 2; z++)
 					if (Math.abs(x) == 2 || Math.abs(y) == 2 || Math.abs(z) == 2) {
 						BlockPos offsetPos = pos.offset(x, y, z);
-						if (this.level.getBlockState(offsetPos).is(Tags.Blocks.UNDYING_CORE_SURROUNDING.get())) { // .is(Tags.Blocks.get(Tags.Blocks.RL_UNDYING_CORE_SURROUNDING))
+						if (this.level.getBlockState(offsetPos).is(Tags.Blocks.UNDYING_CORE_SURROUNDING.get())) {
 							surroundings.add(offsetPos);
 							surrounding++;
 						}
 					}
-		return Math.min(surrounding / 10, 3);
+		return Math.min(surrounding / 16, 3);
 	}
 	
 	private void applyEffects() {

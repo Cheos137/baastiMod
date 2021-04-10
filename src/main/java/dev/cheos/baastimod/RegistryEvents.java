@@ -7,10 +7,12 @@ import dev.cheos.baastimod.block.CustomBlocks;
 import dev.cheos.baastimod.block.tileentity.CustomTileEntityTypes;
 import dev.cheos.baastimod.effect.CustomEffects;
 import dev.cheos.baastimod.enchantment.CustomEnchantments;
+import dev.cheos.baastimod.particle.CustomParticleTypes;
 import dev.cheos.baastimod.potion.CustomPotions;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
@@ -57,5 +59,11 @@ public class RegistryEvents {
 	public static void onTileEntityTypeRegistry(RegistryEvent.Register<TileEntityType<?>> event) {
 		LOGGER.info("Registering tileentity types...");
 		CustomTileEntityTypes.registerTo(event.getRegistry());
+	}
+	
+	@SubscribeEvent
+	public static void onParticleTypeRegistry(RegistryEvent.Register<ParticleType<?>> event) {
+		LOGGER.info("Registering tileentity types...");
+		CustomParticleTypes.registerTo(event.getRegistry());
 	}
 }

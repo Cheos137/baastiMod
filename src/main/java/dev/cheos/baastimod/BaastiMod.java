@@ -19,7 +19,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(BaastiMod.MODID)
-@EventBusSubscriber(bus = Bus.MOD, modid = BaastiMod.MODID)
+@EventBusSubscriber(bus = Bus.FORGE, modid = BaastiMod.MODID)
 public class BaastiMod {
 	private static final Logger LOGGER = LogManager.getLogger();
 	public static final String MODID = "baastimod";

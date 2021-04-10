@@ -14,13 +14,10 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-/**
- * Generic event listener class to implement functionality for various features
- * 
- */
-@EventBusSubscriber(modid = BaastiMod.MODID)
-public class EventListener {
+@EventBusSubscriber(bus = Bus.FORGE, modid = BaastiMod.MODID)
+public class CommonForgeBusEvents {
 	@SubscribeEvent
 	public static void onDeath(LivingDeathEvent event) {
 		LivingEntity entity = event.getEntityLiving();
