@@ -1,5 +1,5 @@
 {
-  "textures": {
-    "particle": "baastimod:entity/undying_core_box"
-  }
+    "textures": {
+        "particle": "baastimod:entity/undying_core_box"
+    }
 }

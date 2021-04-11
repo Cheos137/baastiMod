@@ -7,7 +7,6 @@ import dev.cheos.baastimod.Tags;
 import dev.cheos.baastimod.effect.CustomEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.tileentity.ConduitTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
@@ -15,9 +14,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-/**
- * @see {@link ConduitTileEntity}
- */
 public class UndyingCoreTileEntity extends TileEntity implements ITickableTileEntity {
 	public final List<BlockPos> surroundings = new ArrayList<>();
 	private int tier;
@@ -66,7 +62,7 @@ public class UndyingCoreTileEntity extends TileEntity implements ITickableTileEn
 				player.addEffect(
 						new EffectInstance(
 								CustomEffects.UNDYING,
-								200 + 40 * tier /* duration is tier dependant */,
+								200 + 40 * tier /* duration is tier dependent */,
 								0 /* amplifier: 0, level => 1                 */,
 								true /* yes, this is an ambient effect        */,
 								false /* no, please no particles ('visible')  */,
@@ -75,30 +71,14 @@ public class UndyingCoreTileEntity extends TileEntity implements ITickableTileEn
 		}
 	}
 	
+	// TODO: add sounds at some point in the future?
+	@SuppressWarnings("unused")
 	private void playSound(SoundEvent sound) {
 		this.level.playSound(null, this.worldPosition, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
 	}
 	
 	@Override
-	public void setRemoved() {
-		// option to play deactivate sound here
-		super.setRemoved();
-	}
-	
-	@Override
 	public double getViewDistance() {
-		return 256.0D;
+		return 128.0D;
 	}
-	
-//	@Override
-//	public void load(BlockState state, CompoundNBT nbttag) {
-//		super.load(state, nbttag);
-//	}
-//
-//	@Override
-//	public CompoundNBT save(CompoundNBT nbttag) {
-//		super.save(nbttag);
-//		nbttag.putInt("Tier", tier);
-//		return nbttag;
-//	}
 }

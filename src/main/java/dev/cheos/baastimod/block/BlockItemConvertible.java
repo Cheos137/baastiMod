@@ -8,7 +8,7 @@ public interface BlockItemConvertible {
 	BlockItem asBlockItem();
 	Item.Properties getBlockItemProperties();
 	
-	default BlockItem toBlockItem(Block block) {
+	default BlockItem toNewBlockItem(Block block) {
 		BlockItem blockitem = new BlockItem(block, getBlockItemProperties());
 		blockitem.setRegistryName(block.getRegistryName());
 		return blockitem;

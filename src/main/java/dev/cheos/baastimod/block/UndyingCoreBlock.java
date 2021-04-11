@@ -7,10 +7,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.cheos.baastimod.BaastiMod;
 import dev.cheos.baastimod.block.tileentity.UndyingCoreTileEntity;
 import dev.cheos.baastimod.particle.CustomParticleTypes;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
@@ -19,6 +16,7 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.*;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -26,6 +24,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
@@ -33,13 +32,18 @@ public class UndyingCoreBlock extends Block implements BlockItemConvertible {
 	private static final VoxelShape SHAPE = box(3.2D, 3.2D, 3.2D, 12.8D, 12.8D, 12.8D);
 
 	protected UndyingCoreBlock() {
-		super(AbstractBlock.Properties.of(Material.GLASS, MaterialColor.GOLD).strength(3.0F).noOcclusion().harvestTool(ToolType.AXE)); // .dynamicShape()
+		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NONE)
+				.strength(3.0F)
+				.noOcclusion()
+				.harvestTool(ToolType.PICKAXE)
+				.sound(SoundType.GLASS)
+				.lightLevel(state -> 12));
 		setRegistryName(BaastiMod.MODID, "undying_core");
 	}
 
 	@Override
 	public BlockItem asBlockItem() {
-		return toBlockItem(this);
+		return toNewBlockItem(this);
 	}
 
 	@Override
@@ -49,7 +53,6 @@ public class UndyingCoreBlock extends Block implements BlockItemConvertible {
 			@Override
 			public void renderByItem(ItemStack stack, TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 				super.renderByItem(stack, transformType, matrixStack, buffer, combinedLight, combinedOverlay);
-				
 				TileEntityRendererDispatcher.instance.renderItem(CORE, matrixStack, buffer, combinedLight, combinedOverlay);
 			}
 		});
@@ -73,9 +76,33 @@ public class UndyingCoreBlock extends Block implements BlockItemConvertible {
 				float yd = -2.0F + random.nextFloat();
 				float zd = -0.5F + random.nextFloat();
 				blockpos = blockpos.subtract(pos);
-				Vector3d offsVec = (new Vector3d(xd, yd, zd)).add(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+				Vector3d offsVec = new Vector3d(xd, yd, zd).add(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 				world.addParticle(CustomParticleTypes.BETTER_TOTEM, baseVec.x, baseVec.y, baseVec.z, offsVec.x, offsVec.y, offsVec.z);
 			}
+	}
+	
+	@Override
+	public void destroy(IWorld world, BlockPos pos, BlockState state) {
+		Random random = world.getRandom();
+		for(int i = 0; i < 50; i++) {
+			if (random.nextInt(2) == 0)
+				world.addParticle(
+						ParticleTypes.TOTEM_OF_UNDYING,
+						0.5D + pos.getX(),
+						0.5D + pos.getY(),
+						0.5D + pos.getZ(),
+						2.0D * (-0.5D + random.nextDouble()),
+						3.0D * (-0.5D + random.nextDouble()),
+						2.0D * (-0.5D + random.nextDouble()));
+			world.addParticle(
+					ParticleTypes.SMOKE,
+					0.5D + pos.getX(),
+					0.5D + pos.getY(),
+					0.5D + pos.getZ(),
+					0.5D * (-0.5D + random.nextDouble()),
+					0.5D * (-0.5D + random.nextDouble()),
+					0.5D * (-0.5D + random.nextDouble()));
+		}
 	}
 	
 	@Override
@@ -94,7 +121,6 @@ public class UndyingCoreBlock extends Block implements BlockItemConvertible {
 	}
 	
 	/*==================== FORGE TE STUFF START ====================*/
-	// alternative is extending ContainerBlock
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;

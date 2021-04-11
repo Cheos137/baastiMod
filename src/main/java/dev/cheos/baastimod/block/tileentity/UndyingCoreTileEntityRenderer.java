@@ -86,7 +86,6 @@ public class UndyingCoreTileEntityRenderer extends TileEntityRenderer<UndyingCor
 		matrixStack.pushPose();
 		matrixStack.translate(0.5D, 0.5D, 0.5D);
 		matrixStack.scale(0.6F, 0.6F, 0.6F);
-//		matrixStack.scale(0.75F, 0.75F, 0.75F);
 		GLASS_MODEL.render(matrixStack, vb, combinedLight, combinedOverlay);
 		matrixStack.popPose();
 	}

@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "baastimod:block/undying_core"
+    "variants": {
+        "": {
+            "model": "baastimod:block/undying_core"
+        }
     }
-  }
 }
