@@ -17,6 +17,8 @@ Yeah. Over on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/baastimo
 Well... this mod is very likely to become a quite random assortment of features.<br>
 Current featues include:
 * The 'Undying' enchantment
+* The 'Undying' effect
+* The 'Undying Core' Block, which needs a structure to provide the 'Undying' effect
 
 ## I found a bug.
 
