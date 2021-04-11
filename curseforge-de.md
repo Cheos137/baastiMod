@@ -27,7 +27,7 @@ max. 3 Stufen, es werden 16 Vergoldete Smaragtblöcke pro Stufe benötigt.
 
 
 
-
+<br><br><br><br><br><br><br><br>
 
 ###### Anmerkung
 
