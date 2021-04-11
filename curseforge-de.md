@@ -23,3 +23,12 @@ Unsterblichkeitseffekt - schützt vor dem Tod - die Effektlaufzeit wird durch je
 ![Unsterblichkeitskern](https://img.cheos.dev/baastiMod/core_undying.png)<br>
 Unsterblichkeitskern - ähnlich wie bei einem Aquisator vergibt der Unsterblichkeitskern den Unsterblichkeitseffekt, wenn genügend Vergoldete Smaragdblöcke in der Nähe sind.
 max. 3 Stufen, es werden 16 Vergoldete Smaragtblöcke pro Stufe benötigt.
+
+
+
+
+
+
+###### Anmerkung
+
+Diese Mod wird nur auf zukünftige Minecraft-Versionen updaten. Es wird keine Versionen für ältere Minecraft-Versionen geben.
