@@ -12,14 +12,15 @@ Da [baastiZockt](https://www.youtube.com/c/baastiZockt/) eine Community hat, die
 
 Yeah. Over on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/baastimod)
 
-## What can I do with the mod?
-
-Well... this mod is very likely to become a quite random assortment of features.<br>
-Current featues include:
-* The 'Undying' enchantment
-
 ## I found a bug.
 
 Report it! There's nothing that'll stop you from doing that, right?<br>
 No, really. We're really happy for every bug report, because really... wo want's a bugged mod?
 
+## What can I do with the mod?
+
+Well... this mod is very likely to become a quite random assortment of features.<br>
+Current featues include:
+* The 'Undying' enchantment
+* The 'Undying' effect
+* The 'Undying Core' Block, which needs a structure to provide the 'Undying' effect
