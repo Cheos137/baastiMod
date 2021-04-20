@@ -7,6 +7,7 @@ import dev.cheos.baastimod.block.tileentity.CustomTileEntityTypes;
 import dev.cheos.baastimod.block.tileentity.UndyingCoreTileEntityRenderer;
 import dev.cheos.baastimod.net.BaastiModPacketHandler;
 import dev.cheos.baastimod.net.ClientNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -15,13 +16,14 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(BaastiMod.MODID)
 @EventBusSubscriber(bus = Bus.FORGE, modid = BaastiMod.MODID)
 public class BaastiMod {
 	private static final Logger LOGGER = LogManager.getLogger();
+	private static MinecraftServer server;
 	public static final String MODID = "baastimod";
 	
 	public BaastiMod() {
@@ -39,5 +41,9 @@ public class BaastiMod {
 	}
 	
 	@SubscribeEvent
-	public void server(FMLServerStartedEvent event) { }
+	public void server(FMLServerStartingEvent event) { server = event.getServer(); }
+	
+	public static MinecraftServer server() {
+		return server;
+	}
 }

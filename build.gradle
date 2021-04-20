@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16-1.0.0-alpha1'
+version = '1.16-1.0.0-alpha2'
 group = 'dev.cheos.baastimod'
 archivesBaseName = 'baastimod'
 

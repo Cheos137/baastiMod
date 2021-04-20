@@ -2,20 +2,18 @@ package dev.cheos.baastimod.block;
 
 import java.util.Random;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import dev.cheos.baastimod.BaastiMod;
+import dev.cheos.baastimod.ClientOnly;
 import dev.cheos.baastimod.block.tileentity.UndyingCoreTileEntity;
 import dev.cheos.baastimod.particle.CustomParticleTypes;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +24,9 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.DistExecutor;
 
 public class UndyingCoreBlock extends Block implements BlockItemConvertible {
 	private static final VoxelShape SHAPE = box(3.2D, 3.2D, 3.2D, 12.8D, 12.8D, 12.8D);
@@ -48,14 +48,9 @@ public class UndyingCoreBlock extends Block implements BlockItemConvertible {
 
 	@Override
 	public Item.Properties getBlockItemProperties() {
-		return new Item.Properties().rarity(Rarity.RARE).tab(ItemGroup.TAB_MISC).setISTER(() -> () -> new ItemStackTileEntityRenderer() {
-			private final TileEntity CORE = new UndyingCoreTileEntity();
-			@Override
-			public void renderByItem(ItemStack stack, TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-				super.renderByItem(stack, transformType, matrixStack, buffer, combinedLight, combinedOverlay);
-				TileEntityRendererDispatcher.instance.renderItem(CORE, matrixStack, buffer, combinedLight, combinedOverlay);
-			}
-		});
+		Item.Properties prop = new Item.Properties().rarity(Rarity.RARE).tab(ItemGroup.TAB_MISC);
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientOnly.setISTERUndyingCore(prop));
+		return prop;
 	}
 	
 	@Override

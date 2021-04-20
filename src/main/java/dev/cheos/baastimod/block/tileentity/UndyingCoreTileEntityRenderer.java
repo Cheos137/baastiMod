@@ -10,16 +10,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.tileentity.ConduitTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 
-/**
- * @see {@link ConduitTileEntityRenderer}
- */
 public class UndyingCoreTileEntityRenderer extends TileEntityRenderer<UndyingCoreTileEntity> {
 	@SuppressWarnings("deprecation")
 	private static final RenderMaterial GLASS_MATERIAL = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(BaastiMod.MODID, "entity/undying_core_box"));
